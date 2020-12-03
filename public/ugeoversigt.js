@@ -160,39 +160,39 @@ async function getDagevalues() {
 
 
 
-// let checkboxes = document.querySelectorAll("input[type='checkbox']")
-// let input = document.querySelectorAll("input[type='time']")
+let checkboxes = document.querySelectorAll("input[type='checkbox']")
+let input = document.querySelectorAll("input[type='time']")
 
-// for (let i = 0; i < checkboxes.length; i++) {
-//   checkboxes[i].addEventListener('change', event => {
-//     if (event.target.checked) {
-//       console.log(event.target.value)
-//       if (i % 2 == 0) {
-//         for (let k = i; k < i + 4; k++) {
-//           input[i + k].readOnly = true
-//           input[i + k].value = null
-//         }
-//       }
-//       else if (i % 2 != 0) {
-//         for (let k = i; k < i + 4; k++) {
-//           input[i + k - 2].readOnly = true
-//           input[i + k - 2].value = null
-//         }
-//       }
-//     } else {
-//       if (i % 2 == 0) {
-//         for (let k = i; k < i + 4; k++) {
-//           input[i + k].readOnly = false
-//         }
-//       }
-//       else if (i % 2 != 0) {
-//         for (let k = i; k < i + 4; k++) {
-//           input[i + k - 2].readOnly = false
-//         }
-//       }
-//     }
-//   })
-// }
+for (let i = 0; i < checkboxes.length; i++) {
+  checkboxes[i].addEventListener('change', event => {
+    if (event.target.checked) {
+      console.log(event.target.value)
+      if (i % 2 == 0) {
+        for (let k = i; k < i + 4; k++) {
+          input[i + k].readOnly = true
+          input[i + k].value = null
+        }
+      }
+      else if (i % 2 != 0) {
+        for (let k = i; k < i + 4; k++) {
+          input[i + k - 2].readOnly = true
+          input[i + k - 2].value = null
+        }
+      }
+    } else {
+      if (i % 2 == 0) {
+        for (let k = i; k < i + 4; k++) {
+          input[i + k].readOnly = false
+        }
+      }
+      else if (i % 2 != 0) {
+        for (let k = i; k < i + 4; k++) {
+          input[i + k - 2].readOnly = false
+        }
+      }
+    }
+  })
+}
 
 
 
@@ -214,6 +214,7 @@ async function getBrugersNavn() {
       if (børn[i].aktiv == true) {
         option.text = børn[i].fornavn
         optionBruger.options.add(option)
+        console.log(børn[i].fornavn)
       }
     }
 
