@@ -9,7 +9,7 @@ const multer = require('multer');
 // SET STORAGE
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, '../Projekt sandslotter 1.6/uploads')
+        cb(null, '../app/uploads')
     },
     filename: (req, file, cb) => {
         let a = file.originalname.split('.')
