@@ -206,6 +206,7 @@ async function getBrugersNavn() {
     console.log("jeg er i " + i)
     let option = document.createElement("option")
 
+    console.log(option)
     if (length == 1) {
       option.text = børn.fornavn
       optionBruger.options.add(option)
