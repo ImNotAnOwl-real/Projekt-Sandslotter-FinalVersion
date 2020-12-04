@@ -259,3 +259,15 @@ async function gennemsnitligUgentligTilstedeværelse(ugeFra, ugeTil, barn) {
     res.push(gennemsnitMin)
     return res
 }
+
+// Opretter opret bruger knappen, hvis personen er admin
+async function opretKnappenVis() {
+    let bruger = await get('profil/profilData')
+    if (bruger.admin == true)
+    {
+      let tabProfil = document.getElementById('liProfil')
+      let htmlkodeTabOpret = '<li><a href="../opret.html" id="Opret"><i class="far fa-address-card"></i> Opret bruger</a></li>'
+      tabProfil.insertAdjacentHTML('afterend', htmlkodeTabOpret)
+    }
+  }
+  opretKnappenVis();
