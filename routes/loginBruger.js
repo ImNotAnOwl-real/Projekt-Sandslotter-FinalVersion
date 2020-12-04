@@ -33,7 +33,7 @@ router
     .get('/session', async (request, response) => {
         const navn = request.session.username;
         if (navn) {
-            let filePath = "../app/public/forside.html"
+            let filePath = "../Projekt Sandslotter FinalVersion/private/html/forside.html"
             let resolvedPath = path.resolve(filePath);
             // response.render("forside.html", {navn});
             response.sendFile(resolvedPath);
@@ -46,17 +46,6 @@ router
         if (navn) {
             request.session.destroy;
             response.redirect('/index.html');
-        }
-    })
-    .get('/ugeoversigt', async (request, response) => {
-        const navn = request.session.username;
-        if (navn) {
-        let filePath = "../Projekt Sandslotter FinalVersion/public/forside.html"
-        let resolvedPath = path.resolve(filePath);
-            // response.render("forside.html", {navn});
-            response.sendFile(resolvedPath);
-        } else {
-            response.redirect('/ingenAdgang.html');
         }
     });
 

@@ -29,6 +29,7 @@ app.use('/profil', require('./routes/profil'));
 app.use('/infotavle', require('./routes/infotavle'));
 app.use('/galleri', require('./routes/image'));
 app.use('/beskeder', require('./routes/message'));
+app.use('/', require('./routes/private'));
 
 app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.json());
