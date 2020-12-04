@@ -86,7 +86,6 @@ async function getProfilData() {
   parent1Text.value = bruger.parent1;
   parent2Text.value = bruger.parent2;
   usernameText.value = bruger.username;
-  passwordText.value = bruger.password;
 
   if (bruger.aktiv == true) {
     aktiv.checked = true;
@@ -130,7 +129,6 @@ async function getBrugerValues() {
   parent1Text.value = profil.parent1;
   parent2Text.value = profil.parent2;
   usernameText.value = profil.username;
-  passwordText.value = profil.password;
   if (profil.aktiv == true) {
     aktiv.checked = true;
   }
