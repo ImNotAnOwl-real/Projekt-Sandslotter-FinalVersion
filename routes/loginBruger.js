@@ -44,7 +44,7 @@ router
     .get('/Endsession', async (request, response) => {
         const navn = request.session.username;
         if (navn) {
-            request.session.destroy;
+            request.session.destroy();
             response.redirect('/index.html');
         }
     });
