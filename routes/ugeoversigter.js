@@ -26,7 +26,7 @@ router
         try {
             const navn = request.session.username;
             if (navn) {
-                let ugeoversigt = await controller.getUgeoversigtTilOversigten(request.params.ugenr);
+                let ugeoversigt = await controller.getUgeoversigt(request.params.ugenr);
                 response.send(ugeoversigt);
             }
             else {

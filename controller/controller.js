@@ -13,31 +13,37 @@ const message = require('../model/message');
 
 mongoose.connect(config.databaseURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-
+//Creater ugeoversigt ud fra et ugenr
 exports.createUgeoversigt = async function (ugenr) {
     return ugeoversigt.create({
         ugenr,
     })
 };
+//Creater dag ud fra attributterne på dagen
 exports.createDag = async function (Navn, Afleveres, Hentes, Sovetfra, Sovettil, Syg, Ferie, Kommentar) {
     return dag.create({ Navn, Afleveres, Hentes, Sovetfra, Sovettil, Syg, Ferie, Kommentar })
 }
+//Getter dagen ud fra et ID
 exports.getDag = function (id) {
-    return dag.findOne().populate('_id').where('navn').eq(id).exec();
+    return dag.findOne().select().where('navn').eq(id).exec();
 }
+
+//Getter alle dage
 exports.getDage = function () {
-    return dag.find().populate('dage').exec();
+    return dag.find().select().exec();
 }
-exports.getUgeoversigtTilOversigten = function (ugenr) {
+
+//Getter ugeoversigt til oversigten gennem ugenr
+exports.getUgeoversigt = function (ugenr) {
     return ugeoversigt.findOne().select('dage ugenr').where('ugenr').eq(ugenr).exec();
 };
-exports.getUgeoversigt = function (ugenr) {
-    return ugeoversigt.findOne().select('ugenr').where('ugenr').eq(ugenr).exec();
-};
+
+//Getter ugeoversigter - allesammen
 exports.getUgeoversigter = function () {
     return ugeoversigt.find().select('ugenr').exec();
 };
 
+//Createbruger ud fra attributterne på bruger
 exports.createBruger = async function (fornavn, efternavn, alder, koen, parent1, parent2, username, password, aktiv, admin) {
     const saltRounds = 10;
     hashPw = bcrypt.hashSync(password, saltRounds);
@@ -45,26 +51,32 @@ exports.createBruger = async function (fornavn, efternavn, alder, koen, parent1,
     return brugeren.create({ fornavn, efternavn, alder, koen, parent1, parent2, username, password,aktiv, admin })
 }
 
+//Getter bruger ud fra fornavn
 exports.getBrugerFornavn = async function (fornavn) {
     return await brugeren.findOne().select().where('fornavn').eq(fornavn).exec();
 };
 
+//Getter dagene mandag til fredag ud fra ugeoversigten passer til dagens link og barne linket passer til dagen
 exports.getDageMandagTilFredag = async function (ugeoversigte, barn) {
-    //return await dag.findOne( { ugeoversigter: {objectId: ugeoversigte}})
     return await dag.find().select().where('ugeoversigter').eq(ugeoversigte).where('barn').eq(barn).exec();
-    //return await dag.find({$and: [ { ugeoversigter: { ugeoversigte }}, {barn: {barn} }]}).select().exec();
 };
 
-
+//Getter bruger gennem username
 exports.getBruger = async function (username) {
     return await brugeren.findOne().select().where('username').eq(username).exec();
 };
+
+//Getter alle børnene
 exports.getBoernene = function () {
     return brugeren.find().select().exec();
 };
+
+//Deleter brugeren ud fra brugerID
 exports.deleteBruger = async function (barnId) {
     return brugeren.deleteOne().where('_id').equals(barnId).exec();
 };
+
+//Connecter dag til en bestemt uge ud fra ID - Der bliver brugt findOneAndUpdate funktion frem for save - "overwriter"
 exports.connectDagTilUge = async function (dage, ugeoversigter) {
     mongoose.set('useFindAndModify', false);
     await dag.findOneAndUpdate({ _id: dage._id }, { ugeoversigter: ugeoversigter._id })
@@ -72,6 +84,7 @@ exports.connectDagTilUge = async function (dage, ugeoversigter) {
     await ugeoversigt.findOneAndUpdate({ _id: ugeoversigter._id }, { $push: { dage: dage } })
 }
 
+//Connecter dag til en bestemt uge ud fra ID - Der bliver brugt findOneAndUpdate funktion frem for save - "overwriter"
 exports.connectDagTilBruger = async function (dage, bruger) {
     mongoose.set('useFindAndModify', false);
     console.log(bruger._id + "JEG ER BRUGEREN DER OOPDATERS " + bruger.username)
@@ -79,6 +92,7 @@ exports.connectDagTilBruger = async function (dage, bruger) {
     await brugeren.findOneAndUpdate({ _id: bruger._id }, { $push: { dage: dage } })
 }
 
+//Updaterer profilens attributter
 exports.updateProfil = async function (fornavn, efternavn, alder, koen, parent1, parent2,aktiv, username) {
     mongoose.set('useFindAndModify', false);
     console.log(username)
@@ -86,15 +100,18 @@ exports.updateProfil = async function (fornavn, efternavn, alder, koen, parent1,
     console.log(c1 + "Der sker noget her")
 }
 
+//Updaterer oversgiten med attributter 
 exports.updateOversigt = async function (dage, afleveres, hentes, sovetFra, sovetTil, syg, ferie, kommentar, ugeoversigt, barnet) {
     mongoose.set('useFindAndModify', false);
     console.log(await dag.findOneAndUpdate({ $and: [{ Navn: dage }, { ugeoversigter: ugeoversigt }, { barn: barnet }] }, { Afleveres: afleveres, Hentes: hentes, Sovetfra: sovetFra, Sovettil: sovetTil, Syg: syg, Ferie: ferie, Kommentar: kommentar }) + "Her modifies det")
 }
 
+//Getbruger uden eksport, da den bruges i en controller metoder i brugerverificering
 async function getBruger(brugernavn) {
     return brugeren.findOne().select().where('username').eq(brugernavn).exec();
 }
 
+//Brugerverificering, der tjekker om det krypterede password er sammenligneligt med det password der kommer ind fra databasen
 exports.brugerVerificiering = async function (brugernavn, pw) {
     let user = await getBruger(brugernavn);
     if (user.username !== null || user.username !== undefined) {
@@ -107,9 +124,12 @@ exports.brugerVerificiering = async function (brugernavn, pw) {
     }
 }
 
+//Getter teksten fra infotavlen
 exports.getTekst = async function () {
     return infotable.findOne().select().exec();
 }
+
+//Creater infotavle, med teksten der hører til "Den er nok null i starten"
 exports.createInfotavle = async function (tekst) {
     return infotable.create({
         title: "nr1",
@@ -117,32 +137,40 @@ exports.createInfotavle = async function (tekst) {
     })
 };
 
+//Updaterer infotavlen med den nye tekst og overwriter den gamle
 exports.updateInfotavle = async function (tekst) {
     mongoose.set('useFindAndModify', false);
     console.log(await infotable.findOneAndUpdate({ title:"nr1" }, { tekst: tekst
         
     }))
 };
+
+//Creater image til gallery
 exports.createImage = async function (contentType, image, day, month, year){
     return images.create({contentType, image, day, month, year})
 }
 
+//Getter image så det kan ses
 exports.getImage = function (id){
     return images.findOne().select().where('_id').eq(id).exec();
 }
 
+//Getter image data til imaged
 exports.getImageData = function (){
     return images.find({});
 }
 
-
+//Getter alle images
 exports.getAllImages = function(){
     return images.find().select('_id').exec();
 }
 
+//Getter messages som bliver sendt til personen
 exports.getMessagesReceived = async function (username, afsender){
     return await message.find({modtager: username, afsender: afsender}).exec();
 }
+
+//Getter message der er sendt   
 exports.getMessagesSent = async function (username, afsender){
     return await message.find({modtager: afsender, afsender: username}).exec();
 
