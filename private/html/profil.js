@@ -33,6 +33,7 @@ gem.addEventListener('click', async (event) => {
     let parent1Text = document.getElementById("parent1").value
     let parent2Text = document.getElementById("parent2").value
     let usernameText = document.getElementById("username").value
+    let passwordText = document.getElementById("password").value
     let aktivfest
     if (aktivfest = document.getElementById("aktiv").checked == true) {
       aktivfest = true
@@ -70,6 +71,8 @@ let fdatoText = document.getElementById("fdato");
 let konText = document.getElementById("kon");
 let parent1Text = document.getElementById("parent1");
 let parent2Text = document.getElementById("parent2");
+let usernameText = document.getElementById("username")
+let passwordText = document.getElementById("password")
 
 async function getProfilData() {
 
@@ -82,6 +85,9 @@ async function getProfilData() {
   konText.value = bruger.koen;
   parent1Text.value = bruger.parent1;
   parent2Text.value = bruger.parent2;
+  usernameText.value = bruger.username;
+  passwordText.value = bruger.password;
+
   if (bruger.aktiv == true) {
     aktiv.checked = true;
   }
@@ -106,7 +112,6 @@ async function getProfilData() {
   }
 
 
-  console.log("final" + bruger.fornavn);
 }
 getProfilData()
 
@@ -124,6 +129,8 @@ async function getBrugerValues() {
   konText.value = profil.koen;
   parent1Text.value = profil.parent1;
   parent2Text.value = profil.parent2;
+  usernameText.value = bruger.username;
+  passwordText.value = bruger.password;
   if (profil.aktiv == true) {
     aktiv.checked = true;
   }
