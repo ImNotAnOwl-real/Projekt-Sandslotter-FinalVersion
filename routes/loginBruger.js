@@ -33,7 +33,7 @@ router
     .get('/session', async (request, response) => {
         const navn = request.session.username;
         if (navn) {
-            let filePath = "../Projekt Sandslotter FinalVersion/private/html/forside.html"
+            let filePath = "../app/private/html/forside.html"
             let resolvedPath = path.resolve(filePath);
             // response.render("forside.html", {navn});
             response.sendFile(resolvedPath);

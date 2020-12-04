@@ -23,7 +23,7 @@ router
                 //     console.log(request.params.filer.charAt(reqeust.params.filer.length-1));
                 //     console.log("Jeg er html")
                 // }
-                let filePath = "../Projekt Sandslotter FinalVersion/private/html/" + request.params.filer
+                let filePath = "../app/private/html/" + request.params.filer
                 let resolvedPath = path.resolve(filePath);
                 response.sendFile(resolvedPath);
             } else {
