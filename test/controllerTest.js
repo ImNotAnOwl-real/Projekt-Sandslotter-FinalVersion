@@ -17,9 +17,9 @@ describe('controller test - promise', function () {
         dag.Ferie.should.be.equal(false)
     });  
     it('getUgeoversigt test', async () => {
-        let ugeoversigt = await controller.getUgeoversigt(54);
+        let ugeoversigt = await controller.getUgeoversigt(51);
         should.exist(ugeoversigt);
-        ugeoversigt.ugenr.should.be.equal(54)
+        ugeoversigt.ugenr.should.be.equal(51)
     });  
     it('getUgeoversigter test', async () => {
         let ugeoversigter = await controller.getUgeoversigter();

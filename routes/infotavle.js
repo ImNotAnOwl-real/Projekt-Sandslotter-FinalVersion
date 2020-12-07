@@ -20,8 +20,10 @@ router
     })
     .post('/', async (request, response) => {
         try {
+            console.log("Kommer det herind")
             const navn = request.session.username;
             if (navn) {
+                console.log("hvad med her")
                 let { tekst } = request.body;
                 await controller.createInfotavle(tekst);
                 response.send({ message: 'tekst oprettet!' });
