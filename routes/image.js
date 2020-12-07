@@ -49,7 +49,9 @@ router.post('/uploadimage', upload.single('image'), async (req, res) => {
 router.get('/images', async (req, res) => {
     try {
         const navn = request.session.username;
+        console.log("Kommer vi herind1111")
         if (navn) {
+            console.log("Kommer vi herind")
             let imgArray = await controller.getAllImages();
             res.send(imgArray);
         }

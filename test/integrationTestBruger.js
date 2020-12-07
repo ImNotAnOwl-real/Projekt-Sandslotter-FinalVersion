@@ -17,14 +17,14 @@ describe('integration test - promise', function () {
         let response = await request(app)
             .post('/bruger/testBruger')
             .send({
-                'fornavn': 'Anders',
+                'fornavn': 'Gunner',
                 'efternavn': 'Joachimsen',
                 'alder': 4, 
                 'koen': true,
                 'parent1': 'Freddy',
                 'parent2': 'Lars',
-                'username': 'flowtek333',
-                'password': 'imnotanowl',
+                'username': 'admin',
+                'password': 'admin',
                 'admin': true 
             })
             .set('Content-Type', 'application/json')
