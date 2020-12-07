@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
-
+// Opretter billedet i databasen 
 router.post('/uploadimage', upload.single('image'), async (req, res) => {
     try{
         var img = fs.readFileSync(req.file.path);
@@ -45,7 +45,7 @@ router.post('/uploadimage', upload.single('image'), async (req, res) => {
 
   })
 
-// Get all images
+// Getter alle billeder i databasen og sender dem videre i et array af billeder
 router.get('/images', async (req, res) => {
     try{
         let imgArray = await controller.getAllImages();
@@ -56,6 +56,7 @@ router.get('/images', async (req, res) => {
 
 });
 
+// Getter alle billeders data og sender dem videre
 router.get('/', async (req, res) => {
     try{
         let img = await controller.getImageData();
@@ -66,7 +67,7 @@ router.get('/', async (req, res) => {
 
 });
 
-// // Get image by id
+// // Getter billede ud fra id og sender billedet videre
 router.get('/:id', async (req, res) => {
     var id = req.params.id;
     try{

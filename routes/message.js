@@ -12,6 +12,7 @@ async function get(url) {
     return await respons.json();
 }
 
+// Opretter beskeden i databasen og sender videre om beskeden er oprettet eller ej vha. true eller false
 router
 .post('/sendBesked', async (request, response) => {
     try {
@@ -29,6 +30,8 @@ router
     }
 }
 );
+
+// Getter alle brugere fra databasen og sender dem vodere
     router.get('/brugere', async (request, response) => {
         try{
             let brugere = await controller.getBrugere();
@@ -39,6 +42,8 @@ router
        
       
     });
+
+    // Getter alle beskeder der er sendt og modtaget mellem to brugere og ligger dem sammen i et array og sender dem videre
     router.post('/Beskeder', async (request, response) => {
         try{
             let {modtager} = request.body;

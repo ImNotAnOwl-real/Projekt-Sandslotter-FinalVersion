@@ -69,6 +69,7 @@ router
             sendStatus(e, response);
         }
     })
+    // Henter profildata til en bruger der er logget ind på en session
     .get('/profilData', async (request, response) => {
         try {
             const navn = request.session.username;
@@ -84,6 +85,8 @@ router
             sendStatus(e, response);
         }
     })
+
+    //getter profildata til et specifikt navn
     .get('/profilData/:navn', async (request, response) => {
         try {
             const navn = request.session.username;
@@ -99,6 +102,8 @@ router
             sendStatus(e, response);
         }
     })
+
+    //Poster eller rettere opdaterer en profil
     .post('/', async (request, response) => {
         try {
             const navn = request.session.username;

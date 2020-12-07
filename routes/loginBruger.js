@@ -12,6 +12,7 @@ async function get(url) {
     return await respons.json();
 }
 
+// Laver brugerVerificiering om username og password passer og sender så værdien videre 
 router
     .post('/', async (request, response) => {
         try {
@@ -29,6 +30,7 @@ router
             
         }
     }
+    // Sender forside.html videre
     )
     .get('/session', async (request, response) => {
         const navn = request.session.username;
@@ -41,6 +43,7 @@ router
             response.redirect('/ingenAdgang.html');
         }
     })
+    // Bruges til log ud knappen. Den fjerner alt der er gemt under session og sender en til index.html
     .get('/Endsession', async (request, response) => {
         const navn = request.session.username;
         if (navn) {

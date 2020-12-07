@@ -14,13 +14,14 @@ let inputs = document.querySelectorAll('input')
 let ok = document.getElementById('okBruger')
 
 
+//Opretter en person i systemet med dage til personen samt link til alle 52 uger der er i systemet.
 opret.addEventListener("click", async (event) => {
     if (!event.isTrusted) return
     try {
         for (let i = 0; i < inputs.length; i++) {
             inputs[i].style.removeProperty('border');
             ok.innerHTML = "";
-            if (inputs[i].value == "" ) {
+            if (inputs[i].value == "") {
                 ok.innerHTML = "Venlist indtast i det markeret felt"
                 ok.style.color = "red"
                 inputs[i].style.borderColor = "red"
@@ -53,18 +54,15 @@ opret.addEventListener("click", async (event) => {
         //Den her opretter alle dage til personen og linker dem igennem route
         await post('ugeoversigt', { username: usernameText });
 
-        document.getElementById("okBruger").innerHTML="Bruger oprettet";
-        setTimeout(function(){
-        document.getElementById("okBruger").innerHTML="";
-        },3000);
+        document.getElementById("okBruger").innerHTML = "Bruger oprettet";
+        setTimeout(function () {
+            document.getElementById("okBruger").innerHTML = "";
+        }, 3000);
 
 
 
     } catch (err) {
         console.error(err)
     }
-
-
-    // location.reload();
 
 })

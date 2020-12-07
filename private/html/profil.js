@@ -21,7 +21,7 @@ async function post(url, objekt) {
 
 let gem = document.getElementById("gemProfil")
 
-
+//Knappen gemmer data der står i profilen, hvis man vil ændre oplysninger
 gem.addEventListener('click', async (event) => {
   if (!event.isTrusted) return
   try {
@@ -48,6 +48,8 @@ gem.addEventListener('click', async (event) => {
     console.error(err) // or alert it, or put the message on the page
   }
 })
+
+//Getter alle brugere der er i systemet til admin
 async function getBrugersNavn() {
   let length = 0;
   let børn = await get('profil')
@@ -74,6 +76,8 @@ let parent2Text = document.getElementById("parent2");
 let usernameText = document.getElementById("username")
 let passwordText = document.getElementById("password")
 
+
+//Getter profildata, på personen der er logget ind
 async function getProfilData() {
 
   let bruger = await get("profil/profilData/")
@@ -91,6 +95,7 @@ async function getProfilData() {
     aktiv.checked = true;
   }
 
+  //Flere funktioner bliver added hvis man er admin
   if (bruger.admin == true) {
 
     let profilInfo = document.getElementById('info')
@@ -114,6 +119,7 @@ async function getProfilData() {
 }
 getProfilData()
 
+//henter bruger data ud fra fornavn
 async function getBrugerValues() {
   let aktiv = document.getElementById("aktiv")
   //Selecte index ugenr fra selecten

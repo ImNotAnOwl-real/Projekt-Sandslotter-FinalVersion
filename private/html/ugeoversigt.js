@@ -68,12 +68,14 @@ gem.addEventListener('click', async (event) => {
     let brugeren = await get('profil' + '/fornavn/' + brugerValue)
 
 
+    //Alle dage i dag attributter
     let dag = ['Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag']
 
 
     let sygcheck = false;
     let feriecheck = false;
-    console.log(textareaPrdag[1][0].value)
+
+    //Opdaterer ugeoversigten med de nye values
     for (let i = 0; i < inputPrdag.length; i++) {
 
       await post('ugeoversigt/updates', {
@@ -135,9 +137,12 @@ async function getDagevalues() {
   let dagTilbrugerOgOversigt = await get('profil' + '/fornavn/' + ugeoversigt._id + "/" + brugeren._id);
 
 
+  //Atributter på de forskellige ting der skal hentes
   let attributter = ['Afleveres', 'Hentes', 'Sovetfra', 'Sovettil', 'Syg', 'Ferie']
+  //Kommentar står alene da det er en attribut der ikke kunne arbejde sammen med de andre
   let kommentar = ['Kommentar']
 
+  //Indæstter alt data på attributternes pladser både kommentarer og tider
   for (let i = 0; i < inputPrdag.length; i++) {
     for (let j = 0; j < inputPrdag[0].length; j++) {
       inputPrdag[i][j].value = dagTilbrugerOgOversigt[i][attributter[j]]
@@ -163,6 +168,7 @@ async function getDagevalues() {
 let checkboxes = document.querySelectorAll("input[type='checkbox']")
 let input = document.querySelectorAll("input[type='time']")
 
+//Funktion der sørger for at hvis man ville syg eller fri, så kan man ikke røre tider i inputs
 for (let i = 0; i < checkboxes.length; i++) {
   checkboxes[i].addEventListener('change', event => {
     if (event.target.checked) {

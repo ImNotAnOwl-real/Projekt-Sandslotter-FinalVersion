@@ -4,6 +4,7 @@ const router = express.Router();
 const fetch = require('node-fetch');
 
 router
+    //Getter teksten til infotavlen
     .get('/', async (request, response) => {
         try {
             const navn = request.session.username;
@@ -18,12 +19,11 @@ router
             sendStatus(e, response);
         }
     })
+    //Opretter teksten til infotavlen
     .post('/', async (request, response) => {
         try {
-            console.log("Kommer det herind")
             const navn = request.session.username;
             if (navn) {
-                console.log("hvad med her")
                 let { tekst } = request.body;
                 await controller.createInfotavle(tekst);
                 response.send({ message: 'tekst oprettet!' });
@@ -38,6 +38,7 @@ router
             console.log(e)
         }
     })
+    //Opdaterer teksten til infotavlen
     .post('/update', async (request, response) => {
         try {
             let { tekst } = request.body;

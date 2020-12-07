@@ -14,6 +14,7 @@ async function get(url) {
 }
 
 router
+    // Holder øje med alt efter / på hjemmesiden for at lave session
     .get('/:filer', async (request, response) => {
         try {
             const navn = request.session.username;

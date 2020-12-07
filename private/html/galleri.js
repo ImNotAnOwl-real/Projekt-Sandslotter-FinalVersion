@@ -17,7 +17,7 @@ async function get(url) {
 }
 
 
-
+// Denne funktion tilføjer alle billeder til siden som er uploaded på den valgte dato i datepickeren
 async function uploadImages(){
 
   const uploadedpicsNode = document.getElementById("uploadedpics");
@@ -65,6 +65,7 @@ dp.addEventListener('change', async (event) => {
 
 uploadImages();
 
+//Viser knappen opret hvis man er Admin
 async function opretKnappenVis() {
   let bruger = await get('../profil/profilData')
   if (bruger.admin == true)

@@ -48,7 +48,7 @@ exports.createBruger = async function (fornavn, efternavn, alder, koen, parent1,
     const saltRounds = 10;
     hashPw = bcrypt.hashSync(password, saltRounds);
     password = hashPw;
-    return brugeren.create({ fornavn, efternavn, alder, koen, parent1, parent2, username, password,aktiv, admin })
+    return brugeren.create({ fornavn, efternavn, alder, koen, parent1, parent2, username, password, aktiv, admin })
 }
 
 //Getter bruger ud fra fornavn
@@ -93,10 +93,10 @@ exports.connectDagTilBruger = async function (dage, bruger) {
 }
 
 //Updaterer profilens attributter
-exports.updateProfil = async function (fornavn, efternavn, alder, koen, parent1, parent2,aktiv, username) {
+exports.updateProfil = async function (fornavn, efternavn, alder, koen, parent1, parent2, aktiv, username) {
     mongoose.set('useFindAndModify', false);
     console.log(username)
-    let c1 = await brugeren.findOneAndUpdate({ username: username }, { fornavn: fornavn, efternavn: efternavn, alder: alder, koen: koen, parent1: parent1, parent2: parent2, aktiv:aktiv })
+    let c1 = await brugeren.findOneAndUpdate({ username: username }, { fornavn: fornavn, efternavn: efternavn, alder: alder, koen: koen, parent1: parent1, parent2: parent2, aktiv: aktiv })
     console.log(c1 + "Der sker noget her")
 }
 
@@ -140,86 +140,73 @@ exports.createInfotavle = async function (tekst) {
 //Updaterer infotavlen med den nye tekst og overwriter den gamle
 exports.updateInfotavle = async function (tekst) {
     mongoose.set('useFindAndModify', false);
-    console.log(await infotable.findOneAndUpdate({ title:"nr1" }, { tekst: tekst
-        
+    console.log(await infotable.findOneAndUpdate({ title: "nr1" }, {
+        tekst: tekst
+
     }))
 };
 
 //Creater image til gallery
-exports.createImage = async function (contentType, image, day, month, year){
-    return images.create({contentType, image, day, month, year})
+exports.createImage = async function (contentType, image, day, month, year) {
+    return images.create({ contentType, image, day, month, year })
 }
 
 //Getter image så det kan ses
-exports.getImage = function (id){
+exports.getImage = function (id) {
     return images.findOne().select().where('_id').eq(id).exec();
 }
 
 //Getter image data til imaged
-exports.getImageData = function (){
+exports.getImageData = function () {
     return images.find({});
 }
 
 //Getter alle images
-exports.getAllImages = function(){
+exports.getAllImages = function () {
     return images.find().select('_id').exec();
 }
 
 //Getter messages som bliver sendt til personen
-exports.getMessagesReceived = async function (username, afsender){
-    return await message.find({modtager: username, afsender: afsender}).exec();
+exports.getMessagesReceived = async function (username, afsender) {
+    return await message.find({ modtager: username, afsender: afsender }).exec();
 }
 
 //Getter message der er sendt   
-exports.getMessagesSent = async function (username, afsender){
-    return await message.find({modtager: afsender, afsender: username}).exec();
+exports.getMessagesSent = async function (username, afsender) {
+    return await message.find({ modtager: afsender, afsender: username }).exec();
 
 }
 
 
-
-async function createMessage(afsender, modtager, besked, day, month, year, time){
+//Creater beskeder i controller
+async function createMessage(afsender, modtager, besked, day, month, year, time) {
     const saltRounds = 10;
-    // let dato = Date.now();
-  
-    // hashAfsender = bcrypt.hashSync(afsenderId, saltRounds);
-    // afsenderId = hashAfsender;
-    // hashModtager = bcrypt.hashSync(modtagerId, saltRounds);
-    // modtagerId = hashModtager;
-    // hashBesked = bcrypt.hashSync(besked, saltRounds);
-    // besked = hashBesked;
-    // hashEmne = bcrypt.hashSync(emne, saltRounds);
-    // emne = hashEmne;
     return await message.create({ afsender, modtager, besked, day, month, year, time })
 }
 
-
-exports.sendBesked = async function (afsender, modtager, besked, day, month, year, time){
-    // let modtagerId = await getBruger(modtager);
-    // let afsenderId = await getBruger(afsender);
+//Sender beskeder til en anden bruger.
+exports.sendBesked = async function (afsender, modtager, besked, day, month, year, time) {
     let opretBesked = await createMessage(afsender, modtager, besked, day, month, year, time);
-        if(opretBesked.afsender !== null || opretBesked.afsender !== undefined && opretBesked.modtager !== null || opretBesked.modtager !== undefined 
-             && opretBesked.besked !== null || opretBesked.besked !== undefined){
-                // && opretBesked.emne !== null || opretBesked.emne !== undefined
+    if (opretBesked.afsender !== null || opretBesked.afsender !== undefined && opretBesked.modtager !== null || opretBesked.modtager !== undefined
+        && opretBesked.besked !== null || opretBesked.besked !== undefined) {
         return true;
     } else {
         return false;
     }
-    }
-    exports.getBrugere = async function () {
-        // return brugeren.find({});
-        return brugeren.find().select('username').exec();
-    };
+}
+//Get brugere
+exports.getBrugere = async function () {
+    return brugeren.find().select('username').exec();
+};
 
-    
+
 //-- TIL TEST AF STATISTIK --
 
 function getUgeoversigt(ugenr) {
     return ugeoversigt.findOne().select('ugenr').where('ugenr').eq(ugenr).exec();
 };
 
-function getDagTilUgeoversigtOgBarn(ugeoversigt, barn){
-    // return dag.find().populate('dage').where('ugeoversigter & barn').eq(ugeoversigt, barn).exec()
+function getDagTilUgeoversigtOgBarn(ugeoversigt, barn) {
     return dag.find().populate('dage').where('ugeoversigter').eq(ugeoversigt).where('barn').eq(barn).exec()
 }
 
@@ -241,7 +228,7 @@ exports.antalSygedage = async function (ugeFra, ugeTil, barn) {
     return antaldage
 }
 
-exports.ferieoversigtAlleBørn = async function(uge) {
+exports.ferieoversigtAlleBørn = async function (uge) {
     let ugeoversigt = await getUgeoversigt(uge)
     let count = 0
     let børn = await getBoernene()
@@ -256,7 +243,7 @@ exports.ferieoversigtAlleBørn = async function(uge) {
     return count
 }
 
-exports.gennemsnitligSøvnPrDag = async function(ugeFra, ugeTil, barn) {
+exports.gennemsnitligSøvnPrDag = async function (ugeFra, ugeTil, barn) {
     let timer = []
     let minutter = []
     let res = []
@@ -300,7 +287,7 @@ exports.gennemsnitligSøvnPrDag = async function(ugeFra, ugeTil, barn) {
     return res
 }
 
-exports.gennemsnitligUgentligTilstedeværelse = async function(ugeFra, ugeTil, barn) {
+exports.gennemsnitligUgentligTilstedeværelse = async function (ugeFra, ugeTil, barn) {
     let res = []
     let timer = []
     let minutter = []
@@ -338,9 +325,9 @@ exports.gennemsnitligUgentligTilstedeværelse = async function(ugeFra, ugeTil, b
         gennemsnitMin = (gennemsnitTimer - Math.floor(gennemsnitTimer)) * 60
         gennemsnitTimer = Math.floor(gennemsnitTimer)
     }
-    if(gennemsnitMin > 59){
-        gennemsnitTimer += (Math.floor(gennemsnitMin/60))
-        gennemsnitMin = ((gennemsnitMin/60)/10)*60
+    if (gennemsnitMin > 59) {
+        gennemsnitTimer += (Math.floor(gennemsnitMin / 60))
+        gennemsnitMin = ((gennemsnitMin / 60) / 10) * 60
     }
     console.log(gennemsnitTimer)
     res.push(gennemsnitTimer)

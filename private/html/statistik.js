@@ -53,7 +53,9 @@ getBrugersNavn()
 
 let statistikker = document.getElementById('statistik').style.display = "none"
 let feriestat = document.getElementById('feriestat').style.display = "none"
+//selecter vis knappen
 let vis = document.getElementById("visStatistik");
+//selecter det label der bliver brugt til at vise resultatet
 let resultat = document.getElementById("sygedage");
 //Selecte index ugetilnr fra selecten
 let optionselectTilUge = document.getElementById("ugeTilSelect");
@@ -63,6 +65,7 @@ let optionselectBruger = document.getElementById("barnStatistikSelect");
 let optionselectStatistik = document.getElementById("statistikselect");
 let StatistikValue = optionselectStatistik.options[optionselectStatistik.selectedIndex].value
 
+//hvis statistiktypen ferioversigt er valgt, skal ugeTil og barn select disables
 optionselectStatistik.addEventListener('change', event => {
     if (event.target.value === '2') {
         optionselectBruger.disabled = true
@@ -74,6 +77,7 @@ optionselectStatistik.addEventListener('change', event => {
     }
 })
 
+//ved tryk på knappen vis
 vis.addEventListener('click', async (event) => {
     if (!event.isTrusted) return
     try {
@@ -120,6 +124,7 @@ vis.addEventListener('click', async (event) => {
     }
 })
 
+//returner antal sygedage mellem ugeFra og ugeTil for barn
 async function antalSygedage(ugeFra, ugeTil, barn) {
     let antaldage = 0;
     for (i = ugeFra; i <= ugeTil; i++) {
@@ -134,6 +139,7 @@ async function antalSygedage(ugeFra, ugeTil, barn) {
     return antaldage
 }
 
+//indsætter børn i skema over ferie i uge
 async function ferieoversigtAlleBørn(uge) {
     let mandag = document.getElementById('mandagstat')
     let tirsdag = document.getElementById('tirsdagstat')
@@ -170,6 +176,7 @@ async function ferieoversigtAlleBørn(uge) {
     return count
 }
 
+//returnerer gennemsnittet af søvn per dag fra ugeFra til ugeTil for barn
 async function gennemsnitligSøvnPrDag(ugeFra, ugeTil, barn) {
     let timer = []
     let minutter = []
@@ -213,6 +220,7 @@ async function gennemsnitligSøvnPrDag(ugeFra, ugeTil, barn) {
     return res
 }
 
+//returnerer gennemsnittet af tilstedeværelse per uge fra ugeFra til ugeTil for barn
 async function gennemsnitligUgentligTilstedeværelse(ugeFra, ugeTil, barn) {
     let res = []
     let timer = []
