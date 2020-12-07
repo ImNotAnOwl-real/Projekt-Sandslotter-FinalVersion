@@ -12,17 +12,6 @@ describe('integration test - promise', function () {
             .expect('Content-Type', /json/);
         response.body.efternavn.should.be.equal('Joachimsen');
     });
-    
-
-    it("post('/ugeoversigt/opretUger') test", async () => {
-        let response = await request(app)
-            .post('/ugeoversigt/opretUger')
-            .set('Content-Type', 'application/json')
-            .set('Accept', 'application/json')
-            .expect(200);
-        response.body.message.should.be.equal('ugerne oprettet!');
-        
-    });
 
     it("post('/bruger/testBruger') test", async () => {
         let response = await request(app)

@@ -18,11 +18,6 @@ router
         try {
             const navn = request.session.username;
             if (navn) {
-                // if (request.params.filer.charAt(request.params.filer.length-1) == 'l')
-                // {
-                //     console.log(request.params.filer.charAt(reqeust.params.filer.length-1));
-                //     console.log("Jeg er html")
-                // }
                 let filePath = "../app/private/html/" + request.params.filer
                 let resolvedPath = path.resolve(filePath);
                 response.sendFile(resolvedPath);

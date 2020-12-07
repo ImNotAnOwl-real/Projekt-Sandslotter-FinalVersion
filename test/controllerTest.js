@@ -78,26 +78,7 @@ describe('controller test - promise', function () {
         console.log(bruger + "EFTER SLETNING");
     });
 
-    
-    // it('connectDagTilUge test', async () => {
-    //     let uge = await controller.getUgeoversigt(54);
-    //     let bruger = await controller.getBruger('imnotanowl');
-    //     const dag = await controller.createDag('Mandag', '12:15', '12:55', '10:10', '08:07', false, false, 'hej', uge, bruger);
-    //     let connect = controller.connectDagTilUge(dag, uge);
-    //     uge = await controller.getUgeoversigt(54);
-    //     should.exist(connect);
-    //     uge.dage[9].should.be.equal(dag._id);
-    
-    // });
-
-    // it('connectDagTilBruger test', async () => {
-    //     let bruger = null;
-    //     bruger = await controller.getBruger('imnotanowl');
-    //     console.log(bruger + "FØR SLETNING");
-    //     await controller.deleteBruger(bruger._id)
-    //     bruger = await controller.getBruger('imnotanowl');
-    //     console.log(bruger + "EFTER SLETNING");
-    // });
+    // Alle connects er ikke testet, da de brænder min computer og smadrer den
 
 
 

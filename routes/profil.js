@@ -18,20 +18,17 @@ router
             const navn = request.session.username;
             const admin = request.session.admin;
             if (navn) {
-                if (admin)
-                {
+                if (admin) {
                     let børn = await controller.getBoernene();
                     response.send(børn);
                 }
-                else
-                {
+                else {
                     let barn = await controller.getBruger(navn);
                     response.send(barn);
                 }
-                
+
             }
-            else
-            {
+            else {
                 //response.redirect('/ingenAdgang.html');
             }
         } catch (e) {
@@ -40,14 +37,13 @@ router
     })
     .get('/fornavn/:fnavn', async (request, response) => {
         try {
-           
+
             const navn = request.session.username;
             if (navn) {
-            let bruger = await controller.getBrugerFornavn(request.params.fnavn);
-            response.send(bruger);
+                let bruger = await controller.getBrugerFornavn(request.params.fnavn);
+                response.send(bruger);
             }
-            else
-            {
+            else {
                 //response.redirect('/ingenAdgang.html');
             }
         } catch (e) {
@@ -60,16 +56,15 @@ router
         try {
             const navn = request.session.username;
             if (navn) {
-            let samletData = await controller.getDageMandagTilFredag(request.params.oversigt, request.params.bruger) 
+                let samletData = await controller.getDageMandagTilFredag(request.params.oversigt, request.params.bruger)
 
-            response.send(samletData);
+                response.send(samletData);
             }
-            else
-            {
+            else {
                 //response.redirect('/ingenAdgang.html');
             }
 
-          
+
         } catch (e) {
             sendStatus(e, response);
         }
@@ -81,11 +76,10 @@ router
                 let bruger = await controller.getBruger(navn);
                 response.send(bruger);
             }
-            else
-            {
+            else {
                 //response.redirect('/ingenAdgang.html');
             }
-          
+
         } catch (e) {
             sendStatus(e, response);
         }
@@ -97,11 +91,10 @@ router
                 let bruger = await controller.getBruger(request.params.navn);
                 response.send(bruger);
             }
-            else
-            {
+            else {
                 //response.redirect('/ingenAdgang.html');
             }
-          
+
         } catch (e) {
             sendStatus(e, response);
         }
@@ -110,22 +103,21 @@ router
         try {
             const navn = request.session.username;
             if (navn) {
-            let { fornavn, efternavn, alder, koen, parent1, parent2, aktiv, username } = request.body;
-            await controller.updateProfil(fornavn, efternavn, alder, koen, parent1, parent2,aktiv, username);
+                let { fornavn, efternavn, alder, koen, parent1, parent2, aktiv, username } = request.body;
+                await controller.updateProfil(fornavn, efternavn, alder, koen, parent1, parent2, aktiv, username);
 
-            response.send({ message: 'profil Opdateret!' });
+                response.send({ message: 'profil Opdateret!' });
             }
-            else
-            {
+            else {
                 //response.redirect('/ingenAdgang.html');
             }
-           
+
         } catch (e) {
             sendStatus(e, response);
         }
     }
     );
-    
+
 
 function sendStatus(e, response) {
     console.error("Exception: " + e);

@@ -38,4 +38,14 @@ describe('integration test - promise', function () {
         
     });
 
+    it("post('/ugeoversigt/opretUger') test", async () => {
+        let response = await request(app)
+            .post('/ugeoversigt/opretUger')
+            .set('Content-Type', 'application/json')
+            .set('Accept', 'application/json')
+            .expect(200);
+        response.body.message.should.be.equal('ugerne oprettet!');
+        
+    });
+
 });
