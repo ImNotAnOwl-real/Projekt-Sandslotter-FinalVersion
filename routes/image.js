@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         let a = file.originalname.split('.')
-        cb(null, `${file.fieldname}-${Date.now()}.${a[a.length - 1]}`)
+        cb(null, `${file.fieldname}-${Date.now()}.${a[a.length-1]}`)
     }
 })
 
@@ -21,60 +21,46 @@ const upload = multer({ storage: storage })
 
 
 router.post('/uploadimage', upload.single('image'), async (req, res) => {
-    try {
+    try{
         var img = fs.readFileSync(req.file.path);
         var encode_image = img.toString('base64');
         // Define a JSONobject for the image attributes for saving to database
-
+     
         var d = new Date();
         var dateD = d.getDate();
 
-        if (dateD < 10) {
-            dateD = "0" + dateD.toString();
-
+        if(dateD < 10){
+            dateD = "0"+dateD.toString();
+            
         }
-        var dateM = d.getMonth() + 1;
+        var dateM = d.getMonth()+1;
         var dateY = d.getFullYear();
-        await controller.createImage(req.file.mimetype, new Buffer.from(encode_image, 'base64'), dateD, dateM, dateY);
+         await controller.createImage(req.file.mimetype, new Buffer.from(encode_image, 'base64'), dateD, dateM, dateY);
         console.log('Saved to database');
         res.redirect('/galleri.html');
-    } catch (e) {
+    } catch(e) {
         console.error(e)
     }
+   
 
-
-})
+  })
 
 // Get all images
 router.get('/images', async (req, res) => {
-    try {
-        const navn = request.session.username;
-        console.log("Kommer vi herind1111")
-        if (navn) {
-            console.log("Kommer vi herind")
-            let imgArray = await controller.getAllImages();
-            res.send(imgArray);
-        }
-        else {
-            //response.redirect('/ingenAdgang.html');
-        }
-    } catch (e) {
+    try{
+        let imgArray = await controller.getAllImages();
+        res.send(imgArray);
+    } catch(e){
         console.error(e)
     }
 
 });
 
 router.get('/', async (req, res) => {
-    try {
-        const navn = request.session.username;
-        if (navn) {
-            let img = await controller.getImageData();
-            res.send(img);
-        }
-        else {
-            //response.redirect('/ingenAdgang.html');
-        }
-    } catch (e) {
+    try{
+        let img = await controller.getImageData();
+        res.send(img);
+    } catch(e){
         console.error(e)
     }
 
@@ -83,17 +69,11 @@ router.get('/', async (req, res) => {
 // // Get image by id
 router.get('/:id', async (req, res) => {
     var id = req.params.id;
-    try {
-        const navn = request.session.username;
-        if (navn) {
-            let img = await controller.getImage(id);
-            res.contentType('image/jpeg');
-            res.send(img.image);
-        }
-        else {
-            //response.redirect('/ingenAdgang.html');
-        }
-    } catch (e) {
+    try{
+        let img = await controller.getImage(id);
+        res.contentType('image/jpeg');
+        res.send(img.image);
+    } catch(e){
         console.error(e)
     }
 })

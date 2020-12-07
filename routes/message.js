@@ -13,66 +13,46 @@ async function get(url) {
 }
 
 router
-    .post('/sendBesked', async (request, response) => {
-        try {
-            const navn = request.session.username;
-            if (navn) {
-                let { modtager, besked } = request.body;
-                const username = request.session.username;
-                var d = new Date();
-                var dateD = d.getDate();
-                var dateM = d.getMonth() + 1;
-                var dateY = d.getFullYear();
-                var dateT = d.getUTCHours() + 1 + ":" + (d.getUTCMinutes() < 10 ? '0' : '') + d.getUTCMinutes();
-                let sendBeskedStatus = await controller.sendBesked(username, modtager, besked, dateD, dateM, dateY, dateT);
-                response.json(sendBeskedStatus);
-            }
-            else {
-                //response.redirect('/ingenAdgang.html');
-            }
-
-        } catch (e) {
-            sendStatus(e, response);
-        }
-    }
-    );
-router.get('/brugere', async (request, response) => {
+.post('/sendBesked', async (request, response) => {
     try {
-        const navn = request.session.username;
-        if (navn) {
-            let brugere = await controller.getBrugere();
-            response.send(brugere);
-        }
-        else {
-            //response.redirect('/ingenAdgang.html');
-        }
+        let {modtager, besked} = request.body;
+        const username = request.session.username;
+        var d = new Date();
+        var dateD = d.getDate();
+        var dateM = d.getMonth()+1;
+        var dateY = d.getFullYear();
+        var dateT = d.getUTCHours()+1+":"+(d.getUTCMinutes()<10?'0':'') + d.getUTCMinutes();
+        let sendBeskedStatus =  await controller.sendBesked(username, modtager, besked, dateD, dateM, dateY, dateT);
+        response.json(sendBeskedStatus);
     } catch (e) {
         sendStatus(e, response);
     }
-
-
-});
-router.post('/Beskeder', async (request, response) => {
-    try {
-        const navn = request.session.username;
-        if (navn) {
-            let { modtager } = request.body;
+}
+);
+    router.get('/brugere', async (request, response) => {
+        try{
+            let brugere = await controller.getBrugere();
+            response.send(brugere);
+        } catch (e) {
+            sendStatus(e, response);
+        }
+       
+      
+    });
+    router.post('/Beskeder', async (request, response) => {
+        try{
+            let {modtager} = request.body;
             const username = request.session.username;
             let received = await controller.getMessagesReceived(username, modtager);
             let sent = await controller.getMessagesSent(username, modtager);
             let message = received.concat(sent);
             response.json(message);
+        } catch (e) {
+            sendStatus(e, response);
         }
-        else {
-            //response.redirect('/ingenAdgang.html');
-        }
-
-    } catch (e) {
-        sendStatus(e, response);
-    }
-});
-
-
+    });
+    
+    
 
 function sendStatus(e, response) {
     console.error("Exception: " + e);
