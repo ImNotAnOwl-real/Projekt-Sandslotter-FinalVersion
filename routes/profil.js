@@ -53,6 +53,7 @@ router
     // Henter profildata til en bruger der er logget ind på en session
     .get('/profilData', async (request, response) => {
         try {
+            const navn = request.session.username;
             let bruger = await controller.getBruger(navn);
             response.send(bruger);
 
