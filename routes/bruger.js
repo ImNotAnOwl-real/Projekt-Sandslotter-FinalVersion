@@ -15,14 +15,8 @@ router
     //get barn ud fra et bestemt navn -- skal nok laves om til username
     .get('/:navn', async (request, response) => {
         try {
-            const navn = request.session.username;
-            if (navn) {
                 let bruger = await controller.getBruger(request.params.navn);
                 response.send(bruger);
-            }
-            else {
-                // response.redirect('/ingenAdgang.html');
-            }
 
         } catch (e) {
             sendStatus(e, response);

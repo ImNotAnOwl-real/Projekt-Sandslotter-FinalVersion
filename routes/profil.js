@@ -17,19 +17,13 @@ router
         try {
             const navn = request.session.username;
             const admin = request.session.admin;
-            if (navn) {
-                if (admin) {
-                    let børn = await controller.getBoernene();
-                    response.send(børn);
-                }
-                else {
-                    let barn = await controller.getBruger(navn);
-                    response.send(barn);
-                }
-
+            if (admin) {
+                let børn = await controller.getBoernene();
+                response.send(børn);
             }
             else {
-                //response.redirect('/ingenAdgang.html');
+                let barn = await controller.getBruger(navn);
+                response.send(barn);
             }
         } catch (e) {
             sendStatus(e, response);
@@ -37,15 +31,8 @@ router
     })
     .get('/fornavn/:fnavn', async (request, response) => {
         try {
-
-            const navn = request.session.username;
-            if (navn) {
-                let bruger = await controller.getBrugerFornavn(request.params.fnavn);
-                response.send(bruger);
-            }
-            else {
-                //response.redirect('/ingenAdgang.html');
-            }
+            let bruger = await controller.getBrugerFornavn(request.params.fnavn);
+            response.send(bruger);
         } catch (e) {
             sendStatus(e, response);
         }
@@ -54,15 +41,9 @@ router
     //Det jeg arbejder med id fra oversigt og bruger
     .get('/fornavn/:oversigt/:bruger', async (request, response) => {
         try {
-            const navn = request.session.username;
-            if (navn) {
-                let samletData = await controller.getDageMandagTilFredag(request.params.oversigt, request.params.bruger)
+            let samletData = await controller.getDageMandagTilFredag(request.params.oversigt, request.params.bruger)
 
-                response.send(samletData);
-            }
-            else {
-                //response.redirect('/ingenAdgang.html');
-            }
+            response.send(samletData);
 
 
         } catch (e) {
@@ -72,14 +53,8 @@ router
     // Henter profildata til en bruger der er logget ind på en session
     .get('/profilData', async (request, response) => {
         try {
-            const navn = request.session.username;
-            if (navn) {
-                let bruger = await controller.getBruger(navn);
-                response.send(bruger);
-            }
-            else {
-                //response.redirect('/ingenAdgang.html');
-            }
+            let bruger = await controller.getBruger(navn);
+            response.send(bruger);
 
         } catch (e) {
             sendStatus(e, response);
@@ -89,14 +64,8 @@ router
     //getter profildata til et specifikt navn
     .get('/profilData/:navn', async (request, response) => {
         try {
-            const navn = request.session.username;
-            if (navn) {
-                let bruger = await controller.getBruger(request.params.navn);
-                response.send(bruger);
-            }
-            else {
-                //response.redirect('/ingenAdgang.html');
-            }
+            let bruger = await controller.getBruger(request.params.navn);
+            response.send(bruger);
 
         } catch (e) {
             sendStatus(e, response);
@@ -106,16 +75,10 @@ router
     //Poster eller rettere opdaterer en profil
     .post('/', async (request, response) => {
         try {
-            const navn = request.session.username;
-            if (navn) {
-                let { fornavn, efternavn, alder, koen, parent1, parent2, aktiv, username } = request.body;
-                await controller.updateProfil(fornavn, efternavn, alder, koen, parent1, parent2, aktiv, username);
+            let { fornavn, efternavn, alder, koen, parent1, parent2, aktiv, username } = request.body;
+            await controller.updateProfil(fornavn, efternavn, alder, koen, parent1, parent2, aktiv, username);
 
-                response.send({ message: 'profil Opdateret!' });
-            }
-            else {
-                //response.redirect('/ingenAdgang.html');
-            }
+            response.send({ message: 'profil Opdateret!' });
 
         } catch (e) {
             sendStatus(e, response);

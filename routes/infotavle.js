@@ -7,14 +7,9 @@ router
     //Getter teksten til infotavlen
     .get('/', async (request, response) => {
         try {
-            const navn = request.session.username;
-            if (navn) {
                 let tekst = await controller.getTekst();
                 response.send((tekst == null ? { tekst: null } : tekst));
-            }
-            else {
-                //response.redirect('/ingenAdgang.html');
-            }
+            
         } catch (e) {
             sendStatus(e, response);
         }
@@ -22,15 +17,10 @@ router
     //Opretter teksten til infotavlen
     .post('/', async (request, response) => {
         try {
-            const navn = request.session.username;
-            if (navn) {
                 let { tekst } = request.body;
                 await controller.createInfotavle(tekst);
                 response.send({ message: 'tekst oprettet!' });
-            }
-            else {
-                //response.redirect('/ingenAdgang.html');
-            }
+            
 
         }
         catch (e) {
