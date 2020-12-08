@@ -36,7 +36,6 @@ router.post('/uploadimage', upload.single('image'), async (req, res) => {
         var dateM = d.getMonth()+1;
         var dateY = d.getFullYear();
          await controller.createImage(req.file.mimetype, new Buffer.from(encode_image, 'base64'), dateD, dateM, dateY);
-        console.log('Saved to database');
         res.redirect('/galleri.html');
     } catch(e) {
         console.error(e)

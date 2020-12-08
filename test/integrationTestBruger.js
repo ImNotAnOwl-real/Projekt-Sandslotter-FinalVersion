@@ -31,6 +31,5 @@ describe('integration test - promise', function () {
             .set('Accept', 'application/json')
             .expect(200);
         response.body.message.should.be.equal('Bruger oprettet!');
-        response.body.length.should.be.greaterThanOrEqual(1);
     });
 });

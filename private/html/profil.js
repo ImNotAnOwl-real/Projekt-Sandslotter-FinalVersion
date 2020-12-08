@@ -82,7 +82,6 @@ async function getProfilData() {
 
   let bruger = await get("profil/profilData/")
 
-  console.log(fornavnText);
   fornavnText.value = bruger.fornavn;
   efternavnText.value = bruger.efternavn;
   fdatoText.value = bruger.alder;

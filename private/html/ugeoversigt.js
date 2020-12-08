@@ -172,7 +172,6 @@ let input = document.querySelectorAll("input[type='time']")
 for (let i = 0; i < checkboxes.length; i++) {
   checkboxes[i].addEventListener('change', event => {
     if (event.target.checked) {
-      console.log(event.target.value)
       if (i % 2 == 0) {
         for (let k = i; k < i + 4; k++) {
           input[i + k].readOnly = true
@@ -209,10 +208,8 @@ async function getBrugersNavn() {
   let length = 0;
   let optionBruger = document.getElementById("barnSelect")
   for (let i = 0; i < ('length' in børn ? length = børn.length : length = 1); i++) {
-    console.log("jeg er i " + i)
     let option = document.createElement("option")
 
-    console.log(option)
     if (length == 1) {
       option.text = børn.fornavn
       optionBruger.options.add(option)
@@ -221,7 +218,6 @@ async function getBrugersNavn() {
       if (børn[i].aktiv == true) {
         option.text = børn[i].fornavn
         optionBruger.options.add(option)
-        console.log(børn[i].fornavn)
       }
     }
 
@@ -234,7 +230,6 @@ getBrugersNavn()
 async function getUgerne() {
   let uger = await get('ugeoversigt')
   let optionUger = document.getElementById("ugeSelect")
-  console.log(uger.length)
   for (let i = 0; i < uger.length; i++) {
     let option = document.createElement("option")
     option.text = uger[i].ugenr
