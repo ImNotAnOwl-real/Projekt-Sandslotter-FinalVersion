@@ -26,30 +26,9 @@ router
     .post('/', async (request, response) => {
         try {
             //Hvis man laver en bruger i testen, skal det rykkes udenfor navn if sætningen da det vedrører man har logget ind
-            const navn = request.session.username;
-            if (navn) {
                 let { fornavn, efternavn, alder, koen, parent1, parent2, username, password, aktiv, admin } = request.body;
                 await controller.createBruger(fornavn, efternavn, alder, koen, parent1, parent2, username, password, aktiv, admin);
                 response.send({ message: 'Bruger oprettet!' });
-            }
-            else {
-                // response.redirect('/ingenAdgang.html');
-            }
-        }
-        catch (e) {
-            sendStatus(e, response);
-        }
-    })
-
-    //Opretter brugeren fra test
-    .post('/testBruger', async (request, response) => {
-        try {
-
-            let { fornavn, efternavn, alder, koen, parent1, parent2, username, password,aktiv, admin } = request.body;
-            await controller.createBruger(fornavn, efternavn, alder, koen, parent1, parent2, username, password,aktiv, admin);
-            response.send({ message: 'Bruger oprettet!' });
-
-
         }
         catch (e) {
             sendStatus(e, response);

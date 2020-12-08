@@ -13,9 +13,9 @@ describe('integration test - promise', function () {
         response.body.efternavn.should.be.equal('Joachimsen');
     });
 
-    it("post('/bruger/testBruger') test", async () => {
+    it("post('/bruger') test", async () => {
         let response = await request(app)
-            .post('/bruger/testBruger')
+            .post('/bruger')
             .send({
                 'fornavn': 'Gunner',
                 'efternavn': 'Joachimsen',
@@ -31,9 +31,6 @@ describe('integration test - promise', function () {
             .set('Accept', 'application/json')
             .expect(200);
         response.body.message.should.be.equal('Bruger oprettet!');
-        // response = await controller.getBarn('Joachim');
-        // console.log(response)
-        // response.efternavn.should.be.equal('Joachimsen');
-        
+        response.body.length.should.be.greaterThanOrEqual(1);
     });
 });

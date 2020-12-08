@@ -33,9 +33,6 @@ describe('integration test - promise', function () {
             .set('Accept', 'application/json')
             .expect(200);
         response.body.message.should.be.equal('ugeoversight saved!');
-        //console.log(response.body.sovetTil + "Det her kommer tilbage")
-        //response.body.sovetTil.should.be.equal('12:10');
-        
     });
 
     it("post('/ugeoversigt/opretUger') test", async () => {
