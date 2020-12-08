@@ -25,10 +25,10 @@ describe('controller test - promise', function () {
         let ugeoversigter = await controller.getUgeoversigter();
         should.exist(ugeoversigter);
         ugeoversigter.length.should.be.greaterThanOrEqual(1);
-        ugeoversigter[53].ugenr.should.be.equal(54)
+        ugeoversigter[51].ugenr.should.be.equal(52)
     });
     it('createBruger test', async () => {
-        let bruger = await controller.createBruger("Peter", "Madsen", 14, true, "Pande", "Sej", "imnotanowl", "imnotanowl1", true);
+        let bruger = await controller.createBruger("Peter", "Madsen", 14, true, "Pande", "Sej", "imnotanowl", "imnotanowl1", true, true);
         should.exist(bruger);
         bruger.fornavn.should.be.equal("Peter")
         bruger.alder.should.be.equal('14')
@@ -36,10 +36,10 @@ describe('controller test - promise', function () {
     });  
 
     it('getBrugerFornavn test', async () => {
-        let bruger = await controller.getBrugerFornavn("Peter");
+        let bruger = await controller.getBrugerFornavn("Anders");
         should.exist(bruger);
-        bruger.fornavn.should.be.equal("Peter")
-        bruger.alder.should.be.equal('14')
+        bruger.fornavn.should.be.equal("Anders")
+        bruger.alder.should.be.equal('4')
         bruger.admin.should.be.equal(true)
     }); 
 
@@ -52,11 +52,11 @@ describe('controller test - promise', function () {
     });
 
     it('getBruger test', async () => {
-        let bruger = await controller.getBruger("imnotanowl");
+        let bruger = await controller.getBruger("flowtek333");
         should.exist(bruger);
-        bruger.fornavn.should.be.equal("Morten")
-        bruger.alder.should.be.equal('2020-12-03')
-        bruger.admin.should.be.equal(false)
+        bruger.fornavn.should.be.equal("Anders")
+        bruger.alder.should.be.equal('4')
+        bruger.admin.should.be.equal(true)
     });  
 
 
@@ -64,8 +64,8 @@ describe('controller test - promise', function () {
     it('getBoernene() test', async () => {
         let boernene = await controller.getBoernene();
         boernene.length.should.be.greaterThanOrEqual(1);
-        boernene[0].username.should.be.equal('Frederik');
-        boernene[1].username.should.be.equal('Frederik');
+        boernene[0].username.should.be.equal('flowtek333');
+        boernene[1].username.should.be.equal('fluffi');
 
     });
 

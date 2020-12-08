@@ -5,9 +5,9 @@ const app = require('../app.js');
 
 describe('integration test - promise', function () {
 
-    it("get('/bruger/Joachim') test", async () => {
+    it("get('/bruger/Anders') test", async () => {
         let response = await request(app)
-            .get('/bruger/Joachim')
+            .get('/bruger/flowtek333')
             .expect(200)
             .expect('Content-Type', /json/);
         response.body.efternavn.should.be.equal('Joachimsen');
@@ -25,6 +25,7 @@ describe('integration test - promise', function () {
                 'parent2': 'Lars',
                 'username': 'admin',
                 'password': 'admin',
+                'aktiv': true,
                 'admin': true 
             })
             .set('Content-Type', 'application/json')

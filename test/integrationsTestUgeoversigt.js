@@ -4,13 +4,12 @@ const controller = require("../controller/controller");
 const app = require('../app.js');
 
 describe('integration test - promise', function () {
-
-    it("get('/bruger/Joachim') test", async () => {
+    it("get('/bruger/Anders') test", async () => {
         let response = await request(app)
-            .get('/bruger/Joachim')
+            .get('/bruger/fluffi')
             .expect(200)
             .expect('Content-Type', /json/);
-        response.body.efternavn.should.be.equal('Joachimsen');
+        response.body.efternavn.should.be.equal('hej');
     });
     
 

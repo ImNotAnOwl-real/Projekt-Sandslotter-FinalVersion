@@ -7,17 +7,7 @@ const { post } = require('../app.js');
 
 
 
-describe('efter man er logged ind og skal prøve tavlen', function () {
-
-    // const agent = request.agent('https://sandslottet.herokuapp.com')
-
-    // beforeEach(async (done) => {
-    //     let response = await request(app)
-    //         .post('/loginBruger')
-    //         .send({ 'username': 'admin', 'password': 'admin' })
-    //         .expect(200)
-    // })
-
+describe('Integrations test - tavle', function () {
 
 
     it('creaeInfotavle test', async () => {
@@ -40,7 +30,8 @@ describe('efter man er logged ind og skal prøve tavlen', function () {
         it('updateInfotavle test', async () => {
             let tekst = await controller.createInfotavle("Introtekst");
             await controller.updateInfotavle("Ny Tekst");
-            tekst.should.be.equal("Ny Tekst");
+            tekst = await controller.getTekst()
+            tekst.tekst.should.be.equal("Ny Tekst");
 
         });
 

@@ -21,16 +21,16 @@ describe("Login test", () => {
   describe("Administrator eller bruger test", () => {
 
     it("Er admin", async () => {
-    let admin = await controller.createBruger('Admin', 'Jensen', 55, true, null, null, 'Admin', 'Admin', true); 
+    let admin = await controller.createBruger('Admin', 'Jensen', 55, true, null, null, 'Admin', 'Admin', true, true); 
    
-    admin.adminOrUser.should.be.true;
+    admin.admin.should.be.true;
      
     });
 
     it("Er bruger", async () => {
-      let bruger = await controller.createBruger('Peter', 'Petersen', 5, true, 'Lise Lotte', 'Jens Ole', 'Bruger', 'Bruger', false);
+      let bruger = await controller.createBruger('Peter', 'Petersen', 5, true, 'Lise Lotte', 'Jens Ole', 'Bruger', 'Bruger', false, true);
   
-      bruger.adminOrUser.should.be.false;
+      bruger.admin2.should.be.false;
   
       });
   });
